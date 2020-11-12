@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- override the automatically generated list view for books -->
+        <record model="ir.ui.view" id="costing_tree_view">
+            <field name="name">costing.tree</field>
+            <field name="model">costing.costing</field>
+            <field name="arch" type="xml">
+                <tree string="Costing Tree">
+                   <field name="customer"/>
+                   <field name="name"/>
+                   <field name="style_ref_name"/>
+                   <field name="type"/>
+                   <field name="company"/>
+                   <field name="pricelist"/>
+                   <field name="currency"/>
+                   <field name="stage"/>
+                </tree>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="costing_form_view">
+            <field name="name">costing.form</field>
+            <field name="model">costing.costing</field>
+            <field name="arch" type="xml">
+                <form string="Costing Form">
+                    <sheet>
+                        <div class="header">
+                            <h1>
+                            <field name="season"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer"/>
+                                <field name="season"/>
+                                <!--<field name="season"/>-->
+                                <field name="style_ref_name"/>
+                                <field name="prod_concept" string="Product Concept" widget="many2onebutton"/>
+
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="company"/>
+                                <field name="pricelist"/>
+                                <field name="currency"/>
+                                <field name="stage"/>
+                        </group>
+                        </group>
+
+
+                        <notebook>
+                            <page string="General Details">
+                                <group>
+                                    <group string="Cost Sheet Details">
+                                        <field name="board"/>
+                                        <field name="order_qty"/>
+                                        <field name="size_range"/>
+                                        <field name="sample_size"/>
+                                    </group>
+                                    <group string="Specifications">
+                                        <field name="merch_div"/>
+                                        <field name="merch_fabric"/>
+                                        <field name="merch_size"/>
+                                        <field name="spec_pattern"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Cost Sheet Lines">
+                                <field name="costsheetlines" widget="section_and_note_one2many" mode="tree">
+                                    <tree editable="bottom">
+                                            <control>
+                                                <create name="add_line_control" string="Add a line"/>
+                                                <create name="add_section_control" string="Add a section"
+                                                        context="{'default_display_type': 'line_section'}"/>
+                                            </control>
+                                            <field name="name"/>
+                                            <field name="display_type" invisible="1"/>
+                                            <!--<field name="particulars"/>-->
+                                            <field name="desc"/>
+                                            <field name="placement"/>
+                                            <field name="supplier"/>
+                                            <field name="cut_width"/>
+                                            <field name="consump"/>
+                                            <field name="uom"/>
+                                            <field name="curr"/>
+                                            <field name="cost_item" optional="show"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Approvals">
+
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="costing_list_action">
+            <field name="name">Costing</field>
+            <field name="res_model">costing.costing</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Product Costing
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_costing_menu" name="Costing"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="costing_menu" name="Costing"
+                  parent="main_costing_menu"/>
+        <menuitem id="costing_submenu" name="Costing" parent="costing_menu"
+                  action="costing_list_action"/>
+
+
+
+        <record model="ir.ui.view" id="costingtypes_tree_view">
+            <field name="name">costingtypes.tree</field>
+            <field name="model">costing.costingtypes</field>
+            <field name="arch" type="xml">
+                <tree string="Costing Types" >
+                    <field name="sequence" widget="handle"/>
+                    <field name="costing_types" string="Name"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="costingtypes_list_action">
+            <field name="name">Costing Types</field>
+            <field name="res_model">costing.costingtypes</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Costing Type
+                </p>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="costingtypes_form_view">
+            <field name="name">costingtypes.form</field>
+            <field name="model">costing.costingtypes</field>
+            <field name="arch" type="xml">
+                <form string="Costing Types Form">
+                    <sheet>
+                        <div class="header">
+                            <h1>
+                            <field name="name"/>
+                            </h1>
+                        </div>
+                        <!--<div class="oe_title">
+                            <label for="costing_types" class="oe_edit_only"/>
+                        </div>-->
+                        <field name="costing_types"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="costingtypes_kanban_view">
+            <field name="name">costingtypes.kanban</field>
+            <field name="model">costing.costingtypes</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="name">
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <menuitem id="configuration_menu" name="Configuration"
+                  parent="main_costing_menu"/>
+        <menuitem id="contact_menu" name="Costing Types"
+                  parent="configuration_menu"
+                  action="costingtypes_list_action"/>
+
+
+    <!--Costing stages-->
+
+        <record model="ir.ui.view" id="costingstages_tree_view">
+            <field name="name">costingstages.tree</field>
+            <field name="model">costing.costingstages</field>
+            <field name="arch" type="xml">
+                <tree string="Costing Stages">
+                    <field name="sequence" widget="handle"/>
+                    <field name="costing_stages" string="Name"/>
+                    <field name="folded_in_kanban"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="costingstages_list_action">
+            <field name="name">Costing Stages</field>
+            <field name="res_model">costing.costingstages</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first Costing Type
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="costingstages_form_view">
+            <field name="name">costingstages.form</field>
+            <field name="model">costing.costingstages</field>
+            <field name="arch" type="xml">
+                <form string="Costing Stages Form">
+                    <sheet>
+                        <div class="header">
+                            <h1>
+                            <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="costing_stages" string="Name"/>
+                                <field name="types" string="Type"/>
+                            </group>
+                            <group>
+                                <field name="folded_in_kanban"/>
+                                <field name="allow_to_apply_changes"/>
+                                <field name="final_stage"/>
+                            </group>
+                        </group>
+                        <notebook>
+                                <page string="Approvals">
+                                <field name="approvals" widget="section_and_note_one2many" mode="tree">
+                                        <tree editable="bottom">
+                                            <control>
+                                                <create name="add_line_control" string="Add a line"/>
+                                            </control>
+                                            <field name="role"/>
+                                            <field name="users" widget="many2many_tags"/>
+                                            <field name="approval_type"/>
+                                        </tree>
+                                </field>
+                                </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <menuitem id="contact_cat_menu" name="Costing Stages"
+                  parent="configuration_menu"
+                  action="costingstages_list_action"/>
+
+</odoo>

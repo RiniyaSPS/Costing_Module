@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_costing_costing,costing.costing,model_costing_costing,base.group_user,1,1,1,1
+access_costing_costsheetlines,costing.costsheetlines,model_costing_costsheetlines,base.group_user,1,1,1,1
+access_costing_costingtypes,costing.costingtypes,model_costing_costingtypes,base.group_user,1,1,1,1
+access_costing_costingstages,costing.costingstages,model_costing_costingstages,base.group_user,1,1,1,1
